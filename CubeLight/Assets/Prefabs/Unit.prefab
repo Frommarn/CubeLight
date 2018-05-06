@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df4d9a6f978768346bd87d7c901568fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HarvestSpeed: 0.5
+  _HarvestSpeed: 2
   _HarvestedLight: 0
   _TilesTouching: []
 --- !u!114 &114475759067609250

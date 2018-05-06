@@ -40,6 +40,19 @@ public class PlayerSelectionManager : MonoBehaviour, ISelectionManager, IPreSele
         }
     }
 
+    void ISelectionManager.DeselectSingleGameObject(GameObject unit)
+    {
+        if (_SelectedGameObjects.Contains(unit))
+        {
+            _SelectedGameObjects.Remove(unit);
+            RemoveGameObjectButtonCommands(unit);
+            if (_SelectedGameObjects.Count <= 0)
+            {
+                _CommandPanel.HidePanel();
+            }
+        }
+    }
+
     void ISelectionManager.DeselectAllSelectedGameObjects()
     {
         _SelectedGameObjects.Clear();
@@ -85,6 +98,15 @@ public class PlayerSelectionManager : MonoBehaviour, ISelectionManager, IPreSele
         {
             _CommandPanel.ShowPanel();
             _CommandPanel.AddButtonCommands(buttonCommands);
+        }
+    }
+
+    private void RemoveGameObjectButtonCommands(GameObject unit)
+    {
+        IButtonCommands buttonCommands = unit.GetComponents<IButtonCommands>().ThrowIfMoreThanOne();
+        if (buttonCommands != null)
+        {
+            _CommandPanel.RemoveButtonCommands(buttonCommands);
         }
     }
 }

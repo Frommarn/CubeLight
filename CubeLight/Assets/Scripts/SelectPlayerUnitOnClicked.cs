@@ -1,7 +1,5 @@
 ﻿using Assets.Scripts.Interfaces;
 using Assets.Scripts.Utils;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SelectPlayerUnitOnClicked : MonoBehaviour {
@@ -18,14 +16,21 @@ public class SelectPlayerUnitOnClicked : MonoBehaviour {
     {
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
-            // Tell the Player Unit Manager to select this object also
-            _SelectionManager.SelectAdditionalGameObject(gameObject);
+            if (_SelectionManager.IsSelected(gameObject))
+            {
+                // Tell the Player Unit Manager to deselect this object
+                _SelectionManager.DeselectSingleGameObject(gameObject);
+            }
+            else
+            {
+                // Tell the Player Unit Manager to select this object also
+                _SelectionManager.SelectAdditionalGameObject(gameObject);
+            }
         }
         else
         {
-            // Tell the Player Unit Manager to select this object
+            // Tell the Player Unit Manager to select only this object
             _SelectionManager.SelectSingleGameObject(gameObject);
         }
     }
-
 }

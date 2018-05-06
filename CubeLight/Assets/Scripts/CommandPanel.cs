@@ -47,12 +47,6 @@ public class CommandPanel : MonoBehaviour, ICommandPanel {
         _SelectionCommandPanel.SetActive(false);
     }
 
-    void ICommandPanel.ClearCommandButtons()
-    {
-        _ButtonCommandsList.Clear();
-        ClearAllButtons();
-    }
-
     void ICommandPanel.AddButtonCommands(IButtonCommands buttonCommands)
     {
         _ButtonCommandsList.Add(buttonCommands);
@@ -68,7 +62,7 @@ public class CommandPanel : MonoBehaviour, ICommandPanel {
         }
     }
 
-    private void ClearAllButtons()
+    private void ResetAllButtons()
     {
         foreach (var button in _Buttons)
         {
@@ -79,6 +73,8 @@ public class CommandPanel : MonoBehaviour, ICommandPanel {
 
     private void UpdateCommandPanelButtons()
     {
+        ResetAllButtons();
+
         for (int i = 0; i < _Buttons.Count; i++)
         {
             List<ButtonConfig> buttonConfigs = new List<ButtonConfig>();

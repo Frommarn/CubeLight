@@ -2,7 +2,6 @@
 {
     internal interface ICommandPanel
     {
-        void ClearCommandButtons();
         void AddButtonCommands(IButtonCommands commandButtons);
         void RemoveButtonCommands(IButtonCommands commandButtons);
         void ShowPanel();

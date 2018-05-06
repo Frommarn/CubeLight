@@ -10,5 +10,6 @@ namespace Assets.Scripts.Interfaces
         void SelectAdditionalGameObject(GameObject unit);
         void DeselectAllSelectedGameObjects();
         List<GameObject> GetSelectedGameObjects();
+        void DeselectSingleGameObject(GameObject gameObject);
     }
 }
