@@ -37,9 +37,12 @@ public class PlayerSelectionManager : MonoBehaviour, ISelectionManager, IPreSele
 
     void ISelectionManager.SelectAdditionalGameObject(GameObject unit)
     {
-        _SelectedGameObjects.Add(unit);
-        // TODO Add method to Update the CommandPanel when selecting additional units
-        Debug.Log(_SelectedGameObjects);
+        if (!_SelectedGameObjects.Contains(unit))
+        {
+            _SelectedGameObjects.Add(unit);
+            // TODO Add method to Update the CommandPanel when selecting additional units
+            Debug.Log(_SelectedGameObjects);
+        }
     }
 
     void ISelectionManager.DeselectAllSelectedGameObjects()

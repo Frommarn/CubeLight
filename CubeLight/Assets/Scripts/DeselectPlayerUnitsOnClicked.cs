@@ -23,6 +23,9 @@ public class DeselectPlayerUnitsOnClicked : MonoBehaviour {
 
     void Clicked()
     {
-        _SelectionManager.DeselectAllSelectedGameObjects();
+        if (!(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
+        {
+            _SelectionManager.DeselectAllSelectedGameObjects();
+        }
     }
 }

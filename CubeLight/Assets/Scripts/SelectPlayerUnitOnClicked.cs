@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class SelectPlayerUnitOnClicked : MonoBehaviour {
 
-    private ISelectionManager ISelectionManage_;
+    private ISelectionManager _SelectionManager;
 
     private void Start()
     {
         //gameObjectSelectionManager = GameObject.FindGameObjectWithTag("PlayerUnitManager").GetComponent<PlayerGameObjectSelectionManager>();
-        ISelectionManage_ = Managers._PlayerSelectionManager.GetComponents<ISelectionManager>().ThrowIfMoreThanOne();
+        _SelectionManager = Managers._PlayerSelectionManager.GetComponents<ISelectionManager>().ThrowIfMoreThanOne();
     }
 
     void Clicked()
@@ -19,12 +19,12 @@ public class SelectPlayerUnitOnClicked : MonoBehaviour {
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
             // Tell the Player Unit Manager to select this object also
-            ISelectionManage_.SelectAdditionalGameObject(gameObject);
+            _SelectionManager.SelectAdditionalGameObject(gameObject);
         }
         else
         {
             // Tell the Player Unit Manager to select this object
-            ISelectionManage_.SelectSingleGameObject(gameObject);
+            _SelectionManager.SelectSingleGameObject(gameObject);
         }
     }
 
