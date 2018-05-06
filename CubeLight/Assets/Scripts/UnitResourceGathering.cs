@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitResourceGathering : MonoBehaviour, ICommandButtons {
+public class UnitResourceGathering : MonoBehaviour, IButtonCommands {
 
     public float _HarvestSpeed = 2.0f;
     public int _HarvestedLight = 0;
@@ -14,22 +14,17 @@ public class UnitResourceGathering : MonoBehaviour, ICommandButtons {
     private bool _IsHarvesting;
     private float _AccumulativeHarvestTime;
 
-    private ButtonConfig _Button1;
-    private ButtonConfig _Button2;
-    private ButtonConfig _Button3;
-    private ButtonConfig _Button4;
+    private List<ButtonConfig> _Buttons;
 
-    ButtonConfig ICommandButtons.Button1 { get { return _Button1; } }
-    ButtonConfig ICommandButtons.Button2 { get { return _Button2; } }
-    ButtonConfig ICommandButtons.Button3 { get { return _Button3; } }
-    ButtonConfig ICommandButtons.Button4 { get { return _Button4; } }
+    IEnumerable<ButtonConfig> IButtonCommands.Buttons { get { return _Buttons; } }
 
     private void Awake()
     {
-        _Button1 = new ButtonConfig(HarvestLightWhenStill, "Start\nGathering");
-        _Button2 = new ButtonConfig(DoNotHarvestLightWhenStill, "Stop\nGathering");
-        _Button3 = null;
-        _Button4 = null;
+        _Buttons = new List<ButtonConfig>()
+        {
+            new ButtonConfig(HarvestLightWhenStill, "Start\nGathering", 0),
+            new ButtonConfig(DoNotHarvestLightWhenStill, "Stop\nGathering", 1)
+        };
     }
 
     // Use this for initialization
@@ -48,10 +43,6 @@ public class UnitResourceGathering : MonoBehaviour, ICommandButtons {
         {
             HarvestLightFromTiles();
         }
-        //else if (_LastPosition == gameObject.transform.position)
-        //{
-        //    _IsHarvesting = true;
-        //}
         else
         {
             _LastPosition = gameObject.transform.position;

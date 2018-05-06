@@ -7,14 +7,14 @@ public class PlayerSelectionManager : MonoBehaviour, ISelectionManager, IPreSele
 
     public List<GameObject> _SelectedGameObjects;
     public List<GameObject> _PreSelectedGameObjects;
-    private SelectionCommandPanel _SelectionCommandPanel;   // So it can update the UI for the player when (de)selection happens
+    private ICommandPanel _CommandPanel;   // So it can update the UI for the player when (de)selection happens
 
     // Use this for initialization
     void Start ()
 	{
         _SelectedGameObjects = new List<GameObject>();
         _PreSelectedGameObjects = new List<GameObject>();
-        _SelectionCommandPanel = Managers._UIManager.GetComponent<SelectionCommandPanel>();
+        _CommandPanel = Managers._UIManager.GetComponents<ICommandPanel>().ThrowIfMoreThanOne();
     }
 
     bool ISelectionManager.IsSelected(GameObject unit)
@@ -26,12 +26,7 @@ public class PlayerSelectionManager : MonoBehaviour, ISelectionManager, IPreSele
     {
         _SelectedGameObjects.Clear();
         _SelectedGameObjects.Add(unit);
-        ICommandButtons commandButtons = unit.GetComponents<ICommandButtons>().ThrowIfMoreThanOne();
-        if (commandButtons != null)
-        {
-            _SelectionCommandPanel.ShowPanel();
-            _SelectionCommandPanel.PopulateCommandButtons(commandButtons);
-        }
+        AddGameObjectButtonCommands(unit);
         Debug.Log(_SelectedGameObjects);
     }
 
@@ -40,7 +35,7 @@ public class PlayerSelectionManager : MonoBehaviour, ISelectionManager, IPreSele
         if (!_SelectedGameObjects.Contains(unit))
         {
             _SelectedGameObjects.Add(unit);
-            // TODO Add method to Update the CommandPanel when selecting additional units
+            AddGameObjectButtonCommands(unit);
             Debug.Log(_SelectedGameObjects);
         }
     }
@@ -48,7 +43,7 @@ public class PlayerSelectionManager : MonoBehaviour, ISelectionManager, IPreSele
     void ISelectionManager.DeselectAllSelectedGameObjects()
     {
         _SelectedGameObjects.Clear();
-        _SelectionCommandPanel.HidePanel();
+        _CommandPanel.HidePanel();
     }
 
     List<GameObject> ISelectionManager.GetSelectedGameObjects()
@@ -81,5 +76,15 @@ public class PlayerSelectionManager : MonoBehaviour, ISelectionManager, IPreSele
             (this as ISelectionManager).SelectAdditionalGameObject(item);
         }
         _PreSelectedGameObjects.Clear();
+    }
+
+    private void AddGameObjectButtonCommands(GameObject unit)
+    {
+        IButtonCommands buttonCommands = unit.GetComponents<IButtonCommands>().ThrowIfMoreThanOne();
+        if (buttonCommands != null)
+        {
+            _CommandPanel.ShowPanel();
+            _CommandPanel.AddButtonCommands(buttonCommands);
+        }
     }
 }

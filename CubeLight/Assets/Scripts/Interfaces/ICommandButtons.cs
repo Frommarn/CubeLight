@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Assets.Scripts.Interfaces
 {
-    public interface ICommandButtons
+    public interface IButtonCommands
     {
-        ButtonConfig Button1 { get; }
-        ButtonConfig Button2 { get; }
-        ButtonConfig Button3 { get; }
-        ButtonConfig Button4 { get; }
+        IEnumerable<ButtonConfig> Buttons { get; }
     }
 }
